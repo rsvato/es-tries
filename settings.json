@@ -1,0 +1,107 @@
+{
+  "settings" : {
+    "index" : {
+      "number_of_shards" : 1,
+      "number_of_replicas" : 0
+    },
+    "analysis": {
+      "filter": {
+        "russian_stemmer": {
+          "type":       "stemmer",
+          "language":   "russian"
+        },
+        "stop_service_words" : {
+          "type": "stop",
+          "stopwords" : ["true","false"]
+        },
+        "stop_russian": {
+          "type" : "stop",
+          "stopwords" : "_russian_"
+        },
+        "my_stopwords": {
+          "type": "stop",
+          "stopwords": "а,без,более,бы,был,была,были,было,быть,в,вам,вас,весь,во,вот,все,всего,всех,вы,где,да,даже,для,до,его,ее,если,есть,еще,же,за,здесь,и,из,или,им,их,к,как,ко,когда,кто,ли,либо,мне,может,мы,на,надо,наш,не,него,нее,нет,ни,них,но,ну,о,об,однако,он,она,они,оно,от,очень,по,под,при,с,со,так,также,такой,там,те,тем,то,того,тоже,той,только,том,ты,у,уже,хотя,чего,чей,чем,что,чтобы,чье,чья,эта,эти,это,я,a,an,and,are,as,at,be,but,by,for,if,in,into,is,it,no,not,of,on,or,such,that,the,their,then,there,these,they,this,to,was,will,with"
+        },
+        "delimited" : {
+          "type" : "word_delimiter_graph",
+          "preserve_original": "true",
+          "split_on_numerics" : "true"
+        },
+        "ru_dict" : {
+          "type": "hunspell",
+          "locale": "ru_RU",
+          "dedup" : true
+        },
+        "ru_hyph" : {
+          "type" : "hyphenation_decompounder",
+          "hyphenation_patterns_path" : "analysis/ru.xml",
+          "word_list_path": "analysis/compound_word_list.txt"
+        },
+        "dictionary_decompounder": {
+          "type": "dictionary_decompounder",
+          "word_list_path": "analysis/compound_word_list.txt",
+          "min_subword_size":3,
+          "max_subword_size":22
+        }
+      },
+      "tokenizer": {
+        "ngram3" : {
+          "type" : "edge_ngram",
+          "min_gram": 3,
+          "max_gram": 10,
+          "token_chars": ["letter","digit"]
+        }
+      },
+      "analyzer": {
+        "ru_spell" : {
+          "type": "custom",
+            "tokenizer" : "standard",
+            "filter" : [
+              "lowercase",
+              "stop_service_words",
+              "my_stopwords",
+              "ru_dict",
+              "stop_russian",
+              "delimited"
+            ],
+          "char_filter" : ["html_strip"]
+        },
+        "ru_morph": {
+            "type": "custom",
+            "tokenizer" : "standard",
+            "filter" : [
+              "lowercase",
+              "stop_service_words",
+              "my_stopwords",
+              "english_morphology",
+              "russian_morphology",
+              "stop_russian",
+              "delimited"
+            ],
+            "char_filter" : ["html_strip"]
+        },
+        "normalized_ru": {
+          "tokenizer": "whitespace",
+          "filter": [
+            "lowercase",
+            "stop_service_words",
+            "my_stopwords",
+            "ru_hyph",
+            "russian_stemmer",
+            "stop_russian",
+            "delimited"
+          ],
+          "char_filter" : ["html_strip"]
+        },
+        "normalized_ngrams_ru": {
+          "tokenizer": "ngram3",
+          "filter": [
+            "lowercase",
+            "stop_service_words"
+          ],
+          "char_filter" : ["html_strip"]
+        }
+      }
+    }
+  }
+}

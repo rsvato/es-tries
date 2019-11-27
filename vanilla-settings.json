@@ -1,0 +1,52 @@
+{
+    "analysis": {
+      "filter": {
+        "russian_stemmer": {
+          "type":       "stemmer",
+          "language":   "russian"
+        },
+        "stop_service_words" : {
+          "type": "stop",
+          "stopwords" : ["true","false"]
+        },
+        "stop_russian": {
+          "type" : "stop",
+          "stopwords" : "_russian_"
+        },
+        "delimited" : {
+          "type" : "word_delimiter_graph",
+          "preserve_original": "true",
+          "split_on_numerics" : "true"
+        }
+      },
+      "tokenizer": {
+        "word_parts" : {
+          "type" : "edge_ngram",
+          "min_gram": 4,
+          "max_gram": 10,
+          "token_chars": ["letter","digit"]
+        }
+      },
+      "analyzer": {
+        "normalized_ru": {
+          "tokenizer": "whitespace",
+          "filter": [
+            "lowercase",
+            "stop_service_words",
+            "russian_stemmer",
+            "stop_russian",
+            "delimited"
+          ],
+          "char_filter" : ["html_strip"]
+        },
+        "word_parts" : {
+          "tokenizer": "word_parts",
+          "filter": [
+            "lowercase",
+            "stop_service_words"
+          ],
+          "char_filter" : ["html_strip"]
+        }
+      }
+    }
+  }

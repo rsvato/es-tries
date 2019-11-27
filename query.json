@@ -1,0 +1,52 @@
+{
+    "query" : {
+      "bool" : {
+        "should" : [
+            {"multi_match": {
+              "query": "проц",
+              "fields": ["ru_text_normalized"],
+              "minimum_should_match": "90%",
+              "prefix_length": 3
+          }},
+          {"match" : {
+            "ru_text_ngrammed" : {
+              "query" : "проц",
+              "analyzer" : "standard"
+            }
+          }}
+        ]
+      }
+    },
+    "highlight" : {
+        "fields" : {
+              "ru_text_*" : {}
+          }
+      }
+}
+
+{
+  "query" : {
+    "bool" : {
+      "should" : [
+          {"multi_match": {
+            "query": "убит",
+            "fields": ["ru_*"],
+            "minimum_should_match": "90%",
+            "prefix_length": 3,
+            "fuzziness":2
+        }},
+        {"match" : {
+          "ru_text_ngrammed" : {
+            "query" : "вввввв",
+            "analyzer" : "standard"
+          }
+        }}
+      ]
+    }
+  },
+  "highlight" : {
+      "fields" : {
+            "ru_*" : {}
+        }
+    }
+}

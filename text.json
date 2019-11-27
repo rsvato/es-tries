@@ -1,0 +1,32 @@
+{
+    "properties": {
+      "text": {
+        "type": "text",
+        "copy_to": ["ru_text_normalized", "ru_text_ngrammed", "ru_morph", "ru_dict"]
+      },
+      "ru_text_normalized": {
+          "type": "text",
+          "store": "true",
+          "term_vector": "with_positions_offsets",
+          "analyzer": "normalized_ru"
+        },
+      "ru_text_ngrammed" : {
+        "type": "text",
+          "store": "true",
+          "term_vector": "with_positions_offsets",
+          "analyzer": "normalized_ngrams_ru"
+      },
+      "ru_morph": {
+        "type": "text",
+          "store": "true",
+          "term_vector": "with_positions_offsets",
+          "analyzer": "ru_morph"
+      },
+      "ru_dict": {
+        "type": "text",
+          "store": "true",
+          "term_vector": "with_positions_offsets",
+          "analyzer": "ru_spell"
+      }
+    }
+  }
