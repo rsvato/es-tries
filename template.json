@@ -15,14 +15,18 @@
         "type" : "stop",
         "stopwords" : "_russian_"
       },
-      "snow_russian" : {
-        "type" : "snowball",
-        "language" : "Russian"
-      },
       "delimited" : {
         "type" : "word_delimiter_graph",
         "preserve_original": "true",
         "split_on_numerics" : "true"
+      }
+    },
+    "tokenizer": {
+      "word_parts" : {
+        "type" : "edge_ngram",
+        "min_gram": 4,
+        "max_gram": 10,
+        "token_chars": ["letter","digit"]
       }
     },
     "analyzer": {
@@ -34,6 +38,14 @@
           "russian_stemmer",
           "stop_russian",
           "delimited"
+        ],
+        "char_filter" : ["html_strip"]
+      },
+      "word_parts" : {
+        "tokenizer": "word_parts",
+        "filter": [
+          "lowercase",
+          "stop_service_words"
         ],
         "char_filter" : ["html_strip"]
       }
