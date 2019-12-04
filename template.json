@@ -1,0 +1,44 @@
+{
+  "index_patterns" : ["liferay-*"],
+  "settings" : {
+  "analysis": {
+    "filter": {
+      "russian_stemmer": {
+        "type":       "stemmer",
+        "language":   "russian"
+      },
+      "stop_service_words" : {
+        "type": "stop",
+        "stopwords" : ["true","false"]
+      },
+      "stop_russian": {
+        "type" : "stop",
+        "stopwords" : "_russian_"
+      },
+      "snow_russian" : {
+        "type" : "snowball",
+        "language" : "Russian"
+      },
+      "delimited" : {
+        "type" : "word_delimiter_graph",
+        "preserve_original": "true",
+        "split_on_numerics" : "true"
+      }
+    },
+    "analyzer": {
+      "normalized_ru": {
+        "tokenizer": "whitespace",
+        "filter": [
+          "lowercase",
+          "stop_service_words",
+          "russian_stemmer",
+          "stop_russian",
+          "delimited"
+        ],
+        "char_filter" : ["html_strip"]
+      }
+    }
+  }
+}
+}
+
