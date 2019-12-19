@@ -85,9 +85,8 @@
           "filter": [
             "lowercase",
             "stop_service_words",
-            "my_stopwords",
-            "ru_hyph",
             "russian_stemmer",
+            "stop_russian",
             "delimited"
           ],
           "char_filter" : ["html_strip"]
